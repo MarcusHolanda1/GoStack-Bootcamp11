@@ -16,11 +16,20 @@ function App(){
         })
     }, [])
 
-    function handleAddProject() {
-        setProjects([...projects, `Novo projeto ${Date.now()}`])
+    async function handleAddProject() {
+        
+       const response = await api.post('projects', {
+            title: `Novo projeto ${Date.now()}`, 
+            owner: "Marcola bolado"
+        })
+
+        const project = response.data
+
+        setProjects([... projects, project])
+        // setProjects([...projects, `Novo projeto ${Date.now()}`])
     }
 
-    return  <>
+    return  (<>
                 <Header title="Projects" />;
 
                 <img src={backgroundImage} width={300}></img>
@@ -31,6 +40,6 @@ function App(){
 
                 <button class="buttonRegist" type="button" onClick={handleAddProject}>Adicionar projeto</button>
             </>
-}
+    )}
 
 export default App;
